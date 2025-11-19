@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todos los Episodios - NoelVentura Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--primary-blue:#0066CC;--dark-blue:#0052A3;--light-blue:#E6F2FF;--text-dark:#000000;--text-gray:#333333;--text-light:#555555;--bg-white:#FFFFFF;--bg-light:#FAFAFA;--border-color:#E0E0E0}
+    html,body{margin:0;width:100%;height:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    a{text-decoration:none;color:inherit}
+    button{cursor:pointer;border:none;font-family:inherit}
+    img{max-width:100%;height:auto;display:block}
+    .header{position:sticky;top:0;background:var(--bg-white);border-bottom:1px solid var(--border-color);z-index:1000;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+    .header-container{max-width:1400px;margin:0 auto;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:2rem}
+    .logo a{font-size:1.5rem;font-weight:700;color:var(--text-dark);letter-spacing:-0.02em}
+    .nav-desktop{display:flex;gap:2rem;align-items:center}
+    .nav-desktop a{font-size:0.95rem;font-weight:500;color:var(--text-dark);transition:color 0.2s}
+    .nav-desktop a:hover{color:var(--primary-blue)}
+    .header-actions{display:flex;gap:1rem;align-items:center}
+    .btn-member{background:var(--primary-blue);color:white;padding:0.6rem 1.2rem;border-radius:6px;font-weight:600;font-size:0.9rem;transition:background 0.2s}
+    .btn-member:hover{background:var(--dark-blue)}
+    .btn-login{background:#000000;color:#FFFFFF;padding:0.6rem 1.2rem;font-weight:500;font-size:0.9rem;border-radius:6px;transition:background 0.2s}
+    .menu-toggle{display:none;background:transparent;font-size:1.5rem;padding:0.5rem}
+    .nav-mobile{display:none;flex-direction:column;padding:1rem 2rem;background:var(--bg-white);border-top:1px solid var(--border-color);gap:1rem}
+    .nav-mobile.active{display:flex}
+    .nav-mobile a{padding:0.75rem 0;font-weight:500;color:var(--text-dark);border-bottom:1px solid var(--border-color)}
+    .all-episodes-container{max-width:1400px;margin:0 auto;padding:4rem 2rem}
+    .page-title{font-size:3rem;font-weight:700;color:var(--text-dark);margin-bottom:3rem;text-align:center}
+    .filters-container{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;align-items:center;justify-content:space-between;padding-bottom:2rem;border-bottom:1px solid var(--border-color)}
+    .filter-group{display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center}
+    .filter-btn{background:transparent;color:var(--text-dark);padding:0.6rem 1.2rem;border:1px solid var(--border-color);border-radius:6px;font-weight:500;font-size:0.9rem;transition:all 0.2s}
+    .filter-btn:hover{background:var(--bg-light)}
+    .filter-btn.active{background:var(--primary-blue);color:white;border-color:var(--primary-blue)}
+    .sort-group{display:flex;align-items:center;gap:0.5rem}
+    .sort-label{font-weight:500;color:var(--text-gray);font-size:0.9rem}
+    .sort-select{padding:0.6rem 1.2rem;border:1px solid var(--border-color);border-radius:6px;font-size:0.9rem;font-family:inherit;background:var(--bg-white);color:var(--text-dark);cursor:pointer}
+    .sort-select:focus{outline:none;border-color:var(--primary-blue)}
+    .episodes-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:2rem;margin-top:2rem}
+    .episode-item{background:#000000;border:2px solid var(--primary-blue);border-radius:12px;padding:0;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s;cursor:pointer}
+    .episode-item:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,102,204,0.3)}
+    .episode-video-wrapper{width:100%;position:relative;background:#000}
+    .episode-video-wrapper video{width:100%;height:auto;display:block;border-radius:0}
+    .episode-content{padding:1.5rem}
+    .episode-header{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-bottom:1rem;justify-content:space-between}
+    .episode-type{color:#fff;font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.7rem;border-radius:4px}
+    .episode-type.esenciales{background:rgba(255,255,255,0.2);color:#e0e0e0}
+    .episode-type.invitado{background:#4caf50;color:#fff}
+    .episode-type.solo{background:var(--primary-blue);color:#fff}
+    .episode-date{color:rgba(255,255,255,0.7);font-size:0.85rem}
+    .episode-title-link{text-decoration:none;color:inherit;display:block}
+    .episode-title{font-size:1.4rem;font-weight:700;color:#ffffff;margin-bottom:0.75rem;line-height:1.3;text-transform:uppercase;letter-spacing:0.02em;transition:color 0.2s}
+    .episode-title:hover{color:var(--primary-blue)}
+    .episode-description{color:rgba(255,255,255,0.8);font-size:0.95rem;line-height:1.6;margin-bottom:1rem}
+    .episode-tags-container{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem}
+    .episode-tag{font-size:0.8rem;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.1);padding:0.4rem 0.8rem;border-radius:4px;border:1px solid rgba(255,255,255,0.2)}
+    .no-results{text-align:center;padding:4rem 2rem;color:var(--text-light);font-size:1.1rem}
+    .page-footer{text-align:center;padding:2rem;margin-top:4rem;border-top:1px solid var(--border-color)}
+    .footer-text{color:var(--text-gray);font-size:0.9rem}
+    .footer{background:var(--bg-light);border-top:1px solid var(--border-color);padding:3rem 2rem 1.5rem;margin-top:4rem}
+    .footer-container{max-width:1400px;margin:0 auto}
+    .footer-content{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:3rem;margin-bottom:2rem}
+    .footer-heading{font-size:1rem;font-weight:600;color:var(--text-dark);margin-bottom:1rem}
+    .footer-links{list-style:none;display:flex;flex-direction:column;gap:0.75rem}
+    .footer-links a{color:var(--text-gray);font-size:0.9rem;transition:color 0.2s}
+    .footer-links a:hover{color:var(--primary-blue)}
+    .footer-bottom{text-align:center;padding-top:2rem;border-top:1px solid var(--border-color);color:var(--text-light);font-size:0.85rem}
+    @media (max-width:968px){.nav-desktop{display:none}.menu-toggle{display:block}.btn-login{display:none}.filters-container{flex-direction:column;align-items:flex-start}.page-title{font-size:2rem}.episodes-list{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}}
+    @media (max-width:640px){.header-container{padding:1rem}.btn-member{display:none}.all-episodes-container{padding:2rem 1rem}.page-title{font-size:1.75rem}.filter-group{width:100%}.filter-btn{flex:1;min-width:120px}.episodes-list{grid-template-columns:1fr}.episode-title{font-size:1.1rem}}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-container">
+      <div class="logo"><a href="index.html">Noel Ventura Lab</a></div>
+      <nav class="nav-desktop">
+        <a href="episodios.html">Podcast</a>
+        <a href="acerca.html">Acerca de</a>
+      </nav>
+      <div class="header-actions">
+        <a href="suscripcion.html"><button class="btn-member">Suscribirse</button></a>
+        <a href="index.html"><button class="btn-login">Página Principal</button></a>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+      </div>
+    </div>
+    <nav class="nav-mobile" id="navMobile">
+      <a href="episodios.html">Podcast</a>
+      <a href="acerca.html">Acerca de</a>
+    </nav>
+  </header>
+
+  <div class="all-episodes-container">
+    <h1 class="page-title">Todos los Episodios de Noel Ventura Lab</h1>
+    
+    <div class="filters-container">
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="all">Todos</button>
+        <button class="filter-btn" data-filter="invitado">Episodio con Invitado</button>
+        <button class="filter-btn" data-filter="solo">Episodio Solo</button>
+        <button class="filter-btn" data-filter="esenciales">Esenciales</button>
+      </div>
+      <div class="sort-group">
+        <label class="sort-label" for="sortSelect">Ordenar por:</label>
+        <select id="sortSelect" class="sort-select">
+          <option value="newest">Fecha - Más reciente primero</option>
+          <option value="oldest">Fecha - Más antiguo primero</option>
+          <option value="title-az">Títulos A-Z</option>
+          <option value="title-za">Títulos Z-A</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="episodes-list" id="episodesList">
+      <!-- Episodios se cargarán aquí dinámicamente -->
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-text">Noel Ventura Marca Registrada 2025</div>
+  </footer>
+
+  <script>
+    // Datos de los episodios
+    const episodes = [
+      {
+        type: 'invitado',
+        typeLabel: 'Episodio con Invitado',
+        date: '2025-11-03',
+        dateLabel: '3 de noviembre, 2025',
+        title: 'Adiccion Celular y la repiticion de patrones',
+        description: 'Romper el ciclo es posible, comprenderlo no nos condena al sufrimiento, sino que nos otorga el poder de elegir una vida mas consciente, plena y libre',
+        tags: [],
+        video: 'videos/39.mp4'
+      },
+      {
+        type: 'esenciales',
+        typeLabel: 'Esenciales',
+        date: '2025-10-30',
+        dateLabel: '30 de octubre, 2025',
+        title: 'Adiccion Celular y la repiticion de patrones',
+        description: 'Por pensar bien no es automatico. Nuestros sesgos emocionaeles y atencion limitadas influyen mas de los que creemos. Cuestionar como pensamos es el primer paso habia decisiones mas conscientes.',
+        tags: [],
+        video: 'videos/43.mp4'
+      },
+      {
+        type: 'solo',
+        typeLabel: 'Episodio Solo',
+        date: '2025-10-27',
+        dateLabel: '27 de octubre, 2025',
+        title: 'La Amabilidad como estrategia de Superviviencia',
+        description: 'La amabilidad no es un lujo moral, sino una herramienta evolutiva y biologica que fortalece a los individuos a las comunidades. Promueve la cooperacion, protege al cerebro, reduce el riesgo de enfermedades y nos hace mas felices.',
+        tags: [],
+        video: 'videos/42.mp4'
+      },
+      {
+        type: 'solo',
+        typeLabel: 'Episodio Solo',
+        date: '2025-10-25',
+        dateLabel: '25 de octubre, 2025',
+        title: 'Hacks Cerebrales para una Vida Plena',
+        description: 'La neuplasticidad es la herramienta que nos permite rediseñar nuestrta vida. Cuidar el cerebrono solo mejora el rendimiento academico y laboral, sino que incrementa la calidad de vida y la capacidad de adaptacion frente a los retos de la sociedad moderna',
+        tags: [],
+        video: 'videos/41.mp4'
+      },
+      {
+        type: 'solo',
+        typeLabel: 'Episodio Solo',
+        date: '2025-10-20',
+        dateLabel: '20 de octubre, 2025',
+        title: 'Dominando la motivacion y la Creatividad',
+        description: 'La motivacion nace del control, la productividad de la libertad. Equipos seguros decideb mejor y la creatividad surge cuando el reto nos obliga a conectar ideas con proposito.',
+        tags: [],
+        video: 'videos/35.mp4'
+      },
+      {
+        type: 'invitado',
+        typeLabel: 'Episodio con Invitado',
+        date: '2024-05-06',
+        dateLabel: '6 de mayo, 2024',
+        title: 'La importancia del Acompañamiento Tanatologico',
+        description: 'El acompañamiento tanatologico humaniza el duelo. No borra el dolor, si no que la vida, escucha y sostiene, ayudandole a reconstruir tu alma rota y encontrar sentido. No estas solo. la vulnerabilidad es fortaleza',
+        tags: [],
+        video: 'videos/38.mp4'
+      },
+      {
+        type: 'solo',
+        typeLabel: 'Episodio Solo',
+        date: '2022-04-18',
+        dateLabel: '18 de abril, 2022',
+        title: 'Inteligencia Emocional',
+        description: '',
+        tags: [],
+        video: 'videos/37.mp4'
+      },
+      {
+        type: 'invitado',
+        typeLabel: 'Episodio con Invitado',
+        date: '2022-08-15',
+        dateLabel: '15 de agosto, 2022',
+        title: 'Del Cinismo a la Esperanza',
+        description: '',
+        tags: [],
+        video: 'videos/36.mp4'
+      },
+      {
+        type: 'solo',
+        typeLabel: 'Episodio Solo',
+        date: '2022-03-10',
+        dateLabel: '10 de marzo, 2022',
+        title: 'PORQUE PENSAMOS LO QUE PENSAMOS',
+        description: 'Por pensar bien no es automatico. Nuestros sesgos emocionaeles y atencion limitadas influyen mas de los que creemos. Cuestionar como pensamos es el primer paso habia decisiones mas conscientes.',
+        tags: [],
+        video: 'videos/34.mp4'
+      },
+      {
+        type: 'esenciales',
+        typeLabel: 'Esenciales',
+        date: '2022-01-15',
+        dateLabel: '15 de enero, 2022',
+        title: 'El Cerebro Humano Una Mirada Consciente y Humana',
+        description: 'Transmite la informacion cientifica rigurosa, sino que la humaniza, la vuelve cercana y practica, conectando cuerpo, emocion, conciencia y transformacion. Su enfoque refelja no solo conocimiento, sino sabiduria aplicada al desarrollo personal y al entendimiento profundo de lo que significa ser humano',
+        tags: [],
+        video: 'videos/33.mp4'
+      },
+      {
+        type: 'invitado',
+        typeLabel: 'Episodio con Invitado',
+        date: '2021-12-20',
+        dateLabel: '20 de diciembre, 2021',
+        title: 'El cuerpo orquesta que da forma al alma',
+        description: 'El corazon y el cerebro estan en constante dialogo sentimos, pensamos y recordamos con todo el cuerpo. Cuidar la respiracion, la postura y la atencion mejora nuestra mente, emociones y reaciones',
+        tags: [],
+        video: 'videos/32.mp4'
+      },
+      {
+        type: 'solo',
+        typeLabel: 'Episodio Solo',
+        date: '2021-11-05',
+        dateLabel: '5 de noviembre, 2021',
+        title: 'Neuropsicología de la vida cotidiana',
+        description: 'La conversacion entre Saul Martinez Horta, destacado neuropsicologo clinico y hilda Mosquera, sobre la neuropsicolgia y la salud del cerebro, asi como el impacto de los diagnostico en la calidad de vida',
+        tags: [],
+        video: 'videos/31.mp4'
+      },
+      {
+        type: 'esenciales',
+        typeLabel: 'Esenciales',
+        date: '2021-09-20',
+        dateLabel: '20 de septiembre, 2021',
+        title: 'Sana, Acepta y Transforma',
+        description: 'utiliza la metafora japonesa del Kintsukuroi para enseñar que nuestras cicatrices emocionales, lejos de ser vergonzosas, representan supercion. la adveridades no se evita, se integra como parte de una vida autentica y valiente',
+        tags: [],
+        video: 'videos/30.mp4'
+      },
+      {
+        type: 'solo',
+        typeLabel: 'Episodio Solo',
+        date: '2021-08-15',
+        dateLabel: '15 de agosto, 2021',
+        title: 'Sanando Apegos',
+        description: 'El apego define como nos relacionamos. No es malo, pero puede doler si aprendemos apegos inseguros. Conocer nuestro estilo es el promer paso para sanar y crear vinculos mas sanos.',
+        tags: [],
+        video: 'videos/29.mp4'
+      },
+      {
+        type: 'invitado',
+        typeLabel: 'Episodio con Invitado',
+        date: '2021-07-10',
+        dateLabel: '10 de julio, 2021',
+        title: 'Reflexión sobre la resiliencia: Un Análisis Profundo del pensamiento de Carlos Alanis',
+        description: 'Estrategias prácticas para manejar el estrés y la ansiedad en la vida diaria, comprendiendo sus causas y desarrollando herramientas efectivas para su gestión.',
+        tags: [],
+        video: 'videos/27.mp4'
+      }
+    ];
+
+    let currentFilter = 'all';
+    let currentSort = 'newest';
+
+    // Renderizar episodios
+    function renderEpisodes() {
+      const episodesList = document.getElementById('episodesList');
+      let filteredEpisodes = [...episodes];
+
+      // Filtrar
+      if (currentFilter !== 'all') {
+        filteredEpisodes = filteredEpisodes.filter(ep => ep.type === currentFilter);
+      }
+
+      // Ordenar
+      filteredEpisodes.sort((a, b) => {
+        switch(currentSort) {
+          case 'newest':
+            return new Date(b.date) - new Date(a.date);
+          case 'oldest':
+            return new Date(a.date) - new Date(b.date);
+          case 'title-az':
+            return a.title.localeCompare(b.title);
+          case 'title-za':
+            return b.title.localeCompare(a.title);
+          default:
+            return 0;
+        }
+      });
+
+      // Renderizar
+      if (filteredEpisodes.length === 0) {
+        episodesList.innerHTML = '<div class="no-results">No se encontraron episodios.</div>';
+        return;
+      }
+
+      episodesList.innerHTML = filteredEpisodes.map(episode => `
+        <div class="episode-item">
+          ${episode.video ? `
+            <div class="episode-video-wrapper">
+              <video controls muted loop poster="">
+                <source src="${episode.video}" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+              </video>
+            </div>
+          ` : '<div class="episode-video-wrapper" style="background:#000;height:250px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);">Sin video</div>'}
+          <div class="episode-content">
+            <div class="episode-header">
+              <span class="episode-type ${episode.type}">${episode.typeLabel}</span>
+              <span class="episode-date">${episode.dateLabel}</span>
+            </div>
+            <a href="#" class="episode-title-link">
+              <h2 class="episode-title">${episode.title.toUpperCase()}</h2>
+            </a>
+            ${episode.description ? `<p class="episode-description">${episode.description}</p>` : ''}
+            ${episode.tags && episode.tags.length > 0 ? `
+              <div class="episode-tags-container">
+                ${episode.tags.map(tag => `<span class="episode-tag">${tag}</span>`).join('')}
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Event listeners para filtros
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderEpisodes();
+      });
+    });
+
+    // Event listener para ordenamiento
+    document.getElementById('sortSelect').addEventListener('change', (e) => {
+      currentSort = e.target.value;
+      renderEpisodes();
+    });
+
+    // Menú móvil
+    document.getElementById('menuToggle').addEventListener('click', () => {
+      document.getElementById('navMobile').classList.toggle('active');
+    });
+
+    // Renderizar inicial
+    renderEpisodes();
+  </script>
+</body>
+</html>
+

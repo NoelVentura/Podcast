@@ -1,0 +1,501 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noel Ventura Lab - Podcast de Neurociencia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--primary-blue:#0066CC;--dark-blue:#0052A3;--light-blue:#E6F2FF;--text-dark:#000000;--text-gray:#333333;--text-light:#555555;--bg-white:#FFFFFF;--bg-light:#FAFAFA;--border-color:#E0E0E0}
+    html,body{margin:0;width:100%;height:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    a{text-decoration:none;color:inherit}
+    button{cursor:pointer;border:none;font-family:inherit}
+    img{max-width:100%;height:auto;display:block}
+    .header{position:sticky;top:0;background:var(--bg-white);border-bottom:1px solid var(--border-color);z-index:1000;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+    .header-container{max-width:1400px;margin:0 auto;padding:1rem 2rem;display:flex;align-items:center;justify-content:flex-start;gap:2rem}
+    .logo a{font-size:1.5rem;font-weight:700;color:var(--text-dark);letter-spacing:-0.02em}
+    .nav-desktop{display:flex;gap:2rem;align-items:center;margin-left:auto}
+    .nav-desktop a{font-size:0.95rem;font-weight:500;color:var(--text-dark);transition:color 0.2s}
+    .nav-desktop a:hover{color:var(--primary-blue)}
+    .header-actions{display:flex;gap:1rem;align-items:center}
+    .btn-member{background:var(--primary-blue);color:white;padding:0.6rem 1.2rem;border-radius:6px;font-weight:600;font-size:0.9rem;transition:background 0.2s}
+    .btn-member:hover{background:var(--dark-blue)}
+    .btn-login{background:#000000;color:#FFFFFF;padding:0.6rem 1.2rem;font-weight:500;font-size:0.9rem;border-radius:6px;transition:background 0.2s}
+    .menu-toggle{display:none;background:transparent;font-size:1.5rem;padding:0.5rem}
+    .nav-mobile{display:none;flex-direction:column;padding:1rem 2rem;background:var(--bg-white);border-top:1px solid var(--border-color);gap:1rem}
+    .nav-mobile.active{display:flex}
+    .nav-mobile a{padding:0.75rem 0;font-weight:500;color:var(--text-dark);border-bottom:1px solid var(--border-color)}
+    .hero{background:url('images/entradapodcast.jpg');background-size:cover;background-position:center;background-repeat:no-repeat;padding:10rem 2rem;text-align:right;position:relative;min-height:80vh}
+    .hero-container{max-width:800px;margin-left:auto;margin-right:2rem}
+    .hero-title{font-size:2rem;font-weight:700;color:var(--text-dark);margin-bottom:1.5rem;line-height:1.3;text-align:center}
+    .hero-subtitle{font-size:1.1rem;color:var(--text-gray);margin-bottom:2.5rem;line-height:1.6;text-align:center}
+    .newsletter-form{max-width:600px;margin-left:auto;margin-right:0}
+    .input-group{display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;justify-content:flex-end}
+    .email-input{flex:1;min-width:250px;padding:1rem 1.25rem;border:2px solid var(--border-color);border-radius:8px;font-size:1rem;font-family:inherit;transition:border-color 0.2s}
+    .email-input:focus{outline:none;border-color:var(--primary-blue)}
+    .submit-btn{background:var(--primary-blue);color:white;padding:1rem 2rem;border-radius:8px;font-weight:600;font-size:1rem;transition:background 0.2s;white-space:nowrap}
+    .submit-btn:hover{background:var(--dark-blue)}
+    .form-note{font-size:0.85rem;color:var(--text-light);line-height:1.5;text-align:center}
+    .form-message{margin-top:1rem;padding:0.75rem;border-radius:6px;font-size:0.9rem;display:none}
+    .form-message.success{display:block;background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+    .form-message.error{display:block;background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+    .protocols{padding:5rem 2rem;background:var(--bg-white)}
+    .protocols-container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .protocols-content{display:flex;flex-direction:column;gap:1.5rem}
+    .protocols-title{font-size:3rem;font-weight:700;color:var(--text-dark);line-height:1.2}
+    .protocols-subtitle{font-size:1.2rem;color:var(--text-gray);font-weight:500}
+    .protocols-description{font-size:1.1rem;color:var(--text-gray);line-height:1.7}
+    .protocols-description em{font-style:italic;font-weight:600;color:var(--text-dark)}
+    .protocols-btn{align-self:flex-start;background:var(--primary-blue);color:white;padding:1rem 2rem;border-radius:8px;font-weight:600;font-size:1rem;transition:background 0.2s;margin-top:0.5rem}
+    .protocols-btn:hover{background:var(--dark-blue)}
+    .protocols-image{display:flex;justify-content:center;align-items:center}
+    .book-cover{width:100%;max-width:400px;aspect-ratio:2/3;background:white;border:1px solid var(--border-color);border-radius:8px;padding:3rem 2rem;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,0.1)}
+    .book-title{text-align:center;width:100%}
+    .book-subtitle{font-size:0.9rem;color:var(--text-dark);margin-bottom:1rem;font-weight:500}
+    .book-main-title{font-size:3rem;font-weight:800;color:var(--primary-blue);letter-spacing:-0.02em;margin-bottom:1rem}
+    .letter-o{background:linear-gradient(135deg,var(--primary-blue) 0%,#87CEEB 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .book-author{font-size:1rem;color:var(--text-dark);margin-top:1.5rem}
+    .ask-huberman{padding:5rem 2rem;background:var(--bg-light)}
+    .ask-container{max-width:1200px;margin:0 auto}
+    .ask-title{font-size:2.5rem;font-weight:700;color:var(--text-dark);margin-bottom:1rem;text-align:center}
+    .ask-subtitle{font-size:1.1rem;color:var(--text-gray);text-align:center;margin-bottom:3rem;font-style:italic}
+    .questions-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+    .question-card{background:white;padding:2rem;border-radius:12px;border:1px solid var(--border-color);transition:all 0.3s;cursor:pointer}
+    .question-card:hover{border-color:var(--primary-blue);box-shadow:0 4px 12px rgba(0,102,204,0.1);transform:translateY(-2px)}
+    .question{font-size:1rem;color:var(--text-dark);font-weight:500;line-height:1.5;margin:0}
+    .episodes{padding:5rem 2rem;background:var(--bg-white)}
+    .episodes-container{max-width:1400px;margin:0 auto}
+    .episodes-section-title{font-size:2.5rem;font-weight:700;color:var(--text-dark);margin-bottom:2.5rem}
+    .featured-title{margin-top:5rem}
+    .episodes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:2rem;margin-bottom:2rem}
+    .episode-card{background:var(--bg-light);padding:2rem;border-radius:12px;border:1px solid var(--border-color);transition:all 0.3s;cursor:pointer}
+    .episode-card:hover{border-color:var(--primary-blue);box-shadow:0 4px 12px rgba(0,102,204,0.1);transform:translateY(-2px)}
+    .episode-meta{display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
+    .episode-type{font-size:0.85rem;font-weight:600;color:var(--primary-blue);text-transform:uppercase;letter-spacing:0.5px}
+    .episode-date{font-size:0.85rem;color:var(--text-light)}
+    .episode-title{font-size:1.3rem;font-weight:600;color:var(--text-dark);margin-bottom:1rem;line-height:1.4}
+    .episode-description{font-size:1rem;color:var(--text-gray);line-height:1.6;margin-bottom:1rem}
+    .episode-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem;justify-content:center;align-items:center}
+    .episode-tags video{max-width:400px;width:100%;border-radius:8px;margin-top:1rem;display:block;margin-left:auto;margin-right:auto}
+    .tag{font-size:0.8rem;color:var(--text-gray);background:white;padding:0.3rem 0.7rem;border-radius:4px;border:1px solid var(--border-color)}
+    .episodes-cta{text-align:center;margin-top:3rem}
+    .discover-link{color:var(--primary-blue);font-weight:600;font-size:1.1rem;text-decoration:underline;transition:color 0.2s}
+    .discover-link:hover{color:var(--dark-blue)}
+    .topics{padding:5rem 2rem;background:var(--bg-light)}
+    .topics-container{max-width:1200px;margin:0 auto}
+    .topics-title{font-size:2.5rem;font-weight:700;color:var(--text-dark);margin-bottom:1rem;text-align:center}
+    .topics-subtitle{font-size:1.1rem;color:var(--text-gray);text-align:center;margin-bottom:2rem}
+    .search-box{max-width:600px;margin:0 auto 3rem}
+    .search-input{width:100%;padding:1rem 1.25rem;border:2px solid var(--border-color);border-radius:8px;font-size:1rem;font-family:inherit;transition:border-color 0.2s}
+    .search-input:focus{outline:none;border-color:var(--primary-blue)}
+    .topics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem;margin-bottom:3rem}
+    .topic-card{background:white;padding:1.25rem 1.5rem;border-radius:8px;border:1px solid var(--border-color);color:var(--text-dark);font-weight:500;font-size:0.95rem;transition:all 0.2s;text-align:center}
+    .topic-card:hover{border-color:var(--primary-blue);background:var(--light-blue);color:var(--primary-blue);transform:translateY(-2px)}
+    .topics-cta{text-align:center}
+    .explore-link{color:var(--primary-blue);font-weight:600;font-size:1.1rem;text-decoration:underline;transition:color 0.2s}
+    .explore-link:hover{color:var(--dark-blue)}
+    .about{padding:5rem 2rem;background:var(--bg-white);text-align:center}
+    .about-container{max-width:800px;margin:0 auto}
+    .about-title{font-size:2.5rem;font-weight:700;color:var(--text-dark);margin-bottom:2rem}
+    .about-text{font-size:1.1rem;color:var(--text-gray);line-height:1.8;margin-bottom:1.5rem}
+    .learn-more{display:inline-block;margin-top:2rem;color:var(--primary-blue);font-weight:600;font-size:1.1rem;text-decoration:underline;transition:color 0.2s}
+    .learn-more:hover{color:var(--dark-blue)}
+    .newsletter-signup{padding:4rem 2rem;background:var(--bg-white);text-align:center}
+    .newsletter-container{max-width:700px;margin:0 auto}
+    .newsletter-title{font-size:2rem;font-weight:700;color:var(--text-dark);margin-bottom:1rem}
+    .newsletter-subtitle{font-size:1rem;color:var(--text-gray);margin-bottom:2rem;line-height:1.6}
+    .input-group-small{display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap}
+    .email-input-small{flex:1;min-width:250px;padding:0.9rem 1.2rem;border:2px solid var(--border-color);border-radius:8px;font-size:1rem;font-family:inherit;transition:border-color 0.2s}
+    .email-input-small:focus{outline:none;border-color:var(--primary-blue)}
+    .submit-btn-small{background:var(--primary-blue);color:white;padding:0.9rem 1.5rem;border-radius:8px;font-weight:600;font-size:0.95rem;transition:background 0.2s;white-space:nowrap}
+    .submit-btn-small:hover{background:var(--dark-blue)}
+    .form-message-small{margin-top:1rem;padding:0.75rem;border-radius:6px;font-size:0.9rem;display:none}
+    .form-message-small.success{display:block;background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+    .form-message-small.error{display:block;background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+    .footer{background:var(--text-dark);color:white;padding:4rem 2rem 2rem}
+    .footer-container{max-width:1400px;margin:0 auto}
+    .footer-content{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:3rem;margin-bottom:3rem}
+    .footer-heading{font-size:1rem;font-weight:600;margin-bottom:1rem;color:white}
+    .footer-links{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.75rem}
+    .footer-links a{color:rgba(255,255,255,0.7);font-size:0.9rem;transition:color 0.2s}
+    .footer-links a:hover{color:white}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,0.2);padding-top:2rem;display:flex;flex-direction:column;gap:1.5rem;align-items:center;text-align:center}
+    .footer-logo a{font-size:1.5rem;font-weight:700;color:white;letter-spacing:-0.02em}
+    .footer-copyright{color:rgba(255,255,255,0.6);font-size:0.85rem;line-height:1.6;margin:0}
+    .footer-social{display:flex;gap:1rem;align-items:center}
+    .social-link{font-size:1.5rem;color:rgba(255,255,255,0.7);transition:color 0.2s,transform 0.2s;display:inline-block}
+    .social-link:hover{color:white;transform:translateY(-2px)}
+    .carousel-section{background:#000;padding:4rem 2rem;position:relative;overflow:hidden}
+    .carousel-wrapper{max-width:900px;margin:0 auto;position:relative}
+    .carousel-slides{display:flex;transition:transform 0.5s ease-in-out;padding:1rem 0}
+    .carousel-slide{min-width:100%;display:grid;grid-template-columns:1fr;gap:3rem;align-items:center;padding:3rem 2rem;border:2px solid rgba(255,255,255,0.3);border-radius:12px;margin:0 0.5rem;background:rgba(255,255,255,0.05);min-height:600px}
+    .carousel-slide:first-child{background:rgba(255,255,255,0.05) url('images/43.jpg');background-size:35%;background-position:right center;background-repeat:no-repeat;position:relative}
+    .carousel-slide:first-child::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);border-radius:12px;z-index:0}
+    .carousel-slide:first-child .carousel-content{position:relative;z-index:1}
+    .carousel-slide:nth-child(2){background:rgba(255,255,255,0.05) url('images/42.jpg');background-size:35%;background-position:right center;background-repeat:no-repeat;position:relative}
+    .carousel-slide:nth-child(2)::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);border-radius:12px;z-index:0}
+    .carousel-slide:nth-child(2) .carousel-content{position:relative;z-index:1}
+    .carousel-slide:nth-child(3){background:rgba(255,255,255,0.05) url('images/41.jpg');background-size:35%;background-position:right center;background-repeat:no-repeat;position:relative}
+    .carousel-slide:nth-child(3)::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);border-radius:12px;z-index:0}
+    .carousel-slide:nth-child(3) .carousel-content{position:relative;z-index:1}
+    .carousel-slide:nth-child(4){background:rgba(255,255,255,0.05) url('images/38.jpg');background-size:35%;background-position:right center;background-repeat:no-repeat;position:relative}
+    .carousel-slide:nth-child(4)::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);border-radius:12px;z-index:0}
+    .carousel-slide:nth-child(4) .carousel-content{position:relative;z-index:1}
+    .carousel-content{color:white;text-align:left;max-width:60%;overflow:hidden;box-sizing:border-box}
+    .carousel-title{font-size:2.2rem;font-weight:700;margin-bottom:1.5rem;line-height:1.3;word-wrap:break-word;overflow-wrap:break-word;max-width:100%;box-sizing:border-box}
+    .carousel-subtitle{font-size:1.1rem;color:rgba(255,255,255,0.8);margin-bottom:2rem;line-height:1.6}
+    .carousel-form{display:flex;gap:0.75rem;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:flex-start;max-width:100%}
+    .carousel-email-input{flex:0 1 auto;min-width:200px;max-width:300px;padding:0.75rem 1rem;border:none;border-radius:8px;font-size:0.9rem;font-family:inherit;background:white}
+    .carousel-email-input:focus{outline:2px solid var(--primary-blue)}
+    .carousel-submit-btn{background:var(--primary-blue);color:white;padding:0.75rem 1.5rem;border-radius:8px;font-weight:600;font-size:0.9rem;transition:background 0.2s;white-space:nowrap}
+    .carousel-submit-btn:hover{background:var(--dark-blue)}
+    .carousel-note{font-size:0.9rem;color:rgba(255,255,255,0.7);line-height:1.5}
+    .carousel-image{display:none}
+    .carousel-img{width:100%;max-width:500px;height:auto;border-radius:12px;object-fit:cover;aspect-ratio:3/4;display:none}
+    .carousel-image-placeholder{width:100%;max-width:500px;aspect-ratio:3/4;background:rgba(255,255,255,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);font-size:1rem}
+    .carousel-nav{display:flex;justify-content:center;gap:1rem;margin-top:3rem}
+    .carousel-dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.3);border:none;cursor:pointer;transition:all 0.3s}
+    .carousel-dot.active{background:white;width:32px;border-radius:6px}
+    .carousel-arrows{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);color:white;border:none;width:48px;height:48px;border-radius:50%;font-size:1.5rem;cursor:pointer;transition:all 0.3s;z-index:10;display:flex;align-items:center;justify-content:center}
+    .carousel-arrows:hover{background:rgba(255,255,255,0.2)}
+    .carousel-arrow-prev{left:2rem}
+    .carousel-arrow-next{right:2rem}
+    @media (max-width:968px){.nav-desktop{display:none}.menu-toggle{display:block}.btn-login{display:none}.protocols-container{grid-template-columns:1fr;gap:3rem}.protocols-title{font-size:2.5rem}.book-cover{max-width:300px}.book-main-title{font-size:2.5rem}.episodes-grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}.footer-content{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2rem}.carousel-slide{grid-template-columns:1fr}.carousel-arrows{display:none}.hero-container{margin-left:auto;margin-right:auto}.hero{text-align:center}.newsletter-form{margin-left:auto;margin-right:auto}.input-group{justify-content:center}.form-note{text-align:left}}
+    @media (max-width:640px){.header-container{padding:1rem}.btn-member{display:none}.hero{padding:3rem 1.5rem}.hero-title{font-size:1.5rem}.hero-subtitle{font-size:1rem}.input-group{flex-direction:column}.email-input{min-width:100%}.submit-btn{width:100%}.protocols{padding:3rem 1.5rem}.protocols-title{font-size:2rem}.ask-huberman{padding:3rem 1.5rem}.ask-title{font-size:2rem}.questions-grid{grid-template-columns:1fr}.episodes{padding:3rem 1.5rem}.episodes-section-title{font-size:2rem}.episodes-grid{grid-template-columns:1fr}.featured-title{margin-top:3rem}.topics{padding:3rem 1.5rem}.topics-title{font-size:2rem}.topics-grid{grid-template-columns:1fr}.about{padding:3rem 1.5rem}.about-title{font-size:2rem}.about-text{font-size:1rem}.newsletter-signup{padding:3rem 1.5rem}.newsletter-title{font-size:1.5rem}.input-group-small{flex-direction:column}.email-input-small{min-width:100%}.submit-btn-small{width:100%}.footer{padding:3rem 1.5rem 1.5rem}.footer-content{grid-template-columns:1fr;gap:2rem}.footer-social{flex-wrap:wrap;justify-content:center}.carousel-section{padding:4rem 1.5rem}.carousel-title{font-size:2rem}.carousel-form{flex-direction:column}.carousel-email-input{min-width:100%}.carousel-submit-btn{width:100%}}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-container">
+      <div class="logo"><a href="/">Noel Ventura Lab</a></div>
+      <nav class="nav-desktop">
+        <a href="episodios.html">Podcast</a>
+        <a href="acerca.html">Acerca de</a>
+      </nav>
+      <div class="header-actions">
+        <a href="suscripcion.html"><button class="btn-member">Suscribirse</button></a>
+        <a href="index.html"><button class="btn-login">Página Principal</button></a>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+      </div>
+    </div>
+    <nav class="nav-mobile" id="navMobile">
+      <a href="episodios.html">Podcast</a>
+      <a href="acerca.html">Acerca de</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-container">
+      <h1 class="hero-title">Obtén el Plan Semanal sin costo: Los Podcast de Noel Ventura para maximizar tu productividad, salud física y mental</h1>
+      <p class="hero-subtitle">Regístrate para recibir una copia de mi Plan Semanal, donde desgloso mi rutina semanal y comparto las herramientas y protocolos en los que confío para mantenerme enfocado, saludable y productivo — para que puedas maximizar tu propia salud física y mental.</p>
+      <form class="newsletter-form" id="newsletterForm">
+        <div class="input-group">
+          <input type="email" placeholder="Dirección de Correo" required class="email-input" id="emailInput">
+          <button type="submit" class="submit-btn">Suscribirse</button>
+        </div>
+        <p class="form-note">También te unirás a más de 700,000 personas que reciben el boletín mensual sobre neurociencia, salud y herramientas relacionadas con la ciencia del M.A.C. Noel Ventura. Al enviar tu correo para suscribirte, aceptas la Política de Privacidad.</p>
+        <div class="form-message" id="formMessage"></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="protocols">
+    <div class="protocols-container">
+      <div class="protocols-content">
+        <h2 class="protocols-title">Podcast de la Semana</h2>
+        <p class="protocols-subtitle">por Noel Ventura</p>
+        <p class="protocols-description"><em>Epigenética y Transformación del Ser</em><br><br>Transformarse no significa convertirse en alguien nuevo, sino recordar quién se es realmente detrás de los miedos, los hábitos y las creencias heredadas.</p>
+        <button class="protocols-btn">Pre-ordenar Ahora</button>
+      </div>
+      <div class="protocols-image">
+        <video controls autoplay muted loop width="100%" style="max-width:400px;border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.1);">
+          <source src="videos/PUBLICACION44a.mp4" type="video/mp4">
+          <source src="videos/PUBLICACION44a.webm" type="video/webm">
+          Tu navegador no soporta el elemento de video.
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <section class="carousel-section">
+    <div class="carousel-wrapper">
+      <button class="carousel-arrows carousel-arrow-prev" id="carouselPrev1">‹</button>
+      <button class="carousel-arrows carousel-arrow-next" id="carouselNext1">›</button>
+      <div class="carousel-slides" id="carousel1">
+        <div class="carousel-slide">
+          <div class="carousel-content">
+            <h2 class="carousel-title">Adiccion Celular y la repiticion de patrones</h2>
+            <p class="carousel-subtitle">Reconocer y trabajar nuestra heridas del alma nos permite dejar de repetir patrones dolorosos y avanzar hacia una vida mas plena, autentica y en paz con nosotros mismos.</p>
+            <form class="carousel-form">
+              <input type="email" placeholder="Correo electrónico" class="carousel-email-input" required>
+              <button type="submit" class="carousel-submit-btn">Suscribirse</button>
+            </form>
+            <p class="carousel-note">Nota informativa sobre la suscripción y términos de privacidad.</p>
+          </div>
+          <div class="carousel-image">
+            <img src="images/imagen1.jpg" alt="Carousel 1" class="carousel-img">
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <div class="carousel-content">
+            <h2 class="carousel-title">La Amabilidad como estrategia de Superviviencia</h2>
+            <p class="carousel-subtitle">La amabilidad no es un lujo moral, sino una herramienta evolutiva y biologica que fortalece a los individuos a las comunidades. Promueve la cooperacion, protege al cerebro, reduce el riesgo de enfermedades y nos hace mas felices.</p>
+            <form class="carousel-form">
+              <input type="email" placeholder="Correo electrónico" class="carousel-email-input" required>
+              <button type="submit" class="carousel-submit-btn">Suscribirse</button>
+            </form>
+            <p class="carousel-note">Nota informativa sobre la suscripción y términos de privacidad.</p>
+          </div>
+          <div class="carousel-image">
+            <img src="images/imagen2.jpg" alt="Carousel 2" class="carousel-img">
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <div class="carousel-content">
+            <h2 class="carousel-title">Hacks Cerebrales para una Vida Plena</h2>
+            <p class="carousel-subtitle">La neuplasticidad es la herramienta que nos permite rediseñar nuestrta vida. Cuidar el cerebrono solo mejora el rendimiento academico y laboral, sino que incrementa la calidad de vida y la capacidad de adaptacion frente a los retos de la sociedad moderna</p>
+            <form class="carousel-form">
+              <input type="email" placeholder="Correo electrónico" class="carousel-email-input" required>
+              <button type="submit" class="carousel-submit-btn">Suscribirse</button>
+            </form>
+            <p class="carousel-note">Nota informativa sobre la suscripción y términos de privacidad.</p>
+          </div>
+          <div class="carousel-image">
+            <img src="images/imagen3.jpg" alt="Carousel 3" class="carousel-img">
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <div class="carousel-content">
+            <h2 class="carousel-title">La importancia del acompañamiento Tanatologico</h2>
+            <p class="carousel-subtitle">El acompañamiento tanatologico humaniza el duelo. no borra el dolor, sino que la valida, escucha y sostiene, ayudandose a reconstruir tu alma rota y encontrar sentido. No estas solo. La vulnerabilidad es fortaleza.</p>
+            <form class="carousel-form">
+              <input type="email" placeholder="Correo electrónico" class="carousel-email-input" required>
+              <button type="submit" class="carousel-submit-btn">Suscribirse</button>
+            </form>
+            <p class="carousel-note">Nota informativa sobre la suscripción y términos de privacidad.</p>
+          </div>
+          <div class="carousel-image">
+            <img src="images/imagen4.jpg" alt="Carousel 4" class="carousel-img">
+          </div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button class="carousel-dot active" data-slide="0"></button>
+        <button class="carousel-dot" data-slide="1"></button>
+        <button class="carousel-dot" data-slide="2"></button>
+        <button class="carousel-dot" data-slide="3"></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="ask-huberman">
+    <div class="ask-container">
+      <h2 class="ask-title">Pregunta a Noel Ventura</h2>
+      <p class="ask-subtitle">Superficie información de los episodios de Noel Ventura Lab, completo con resúmenes, clips y contexto. Instantáneo y sin costo.</p>
+      <div class="questions-grid">
+        <div class="question-card">
+          <p class="question">¿Qué protocolos se recomiendan para mejorar el sueño?</p>
+        </div>
+        <div class="question-card">
+          <p class="question">¿Por qué la luz brillante por la noche es mala para el sueño?</p>
+        </div>
+        <div class="question-card">
+          <p class="question">¿Por qué es importante la luz solar matutina?</p>
+        </div>
+        <div class="question-card">
+          <p class="question">¿Cómo interrumpe la marihuana tu sueño?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="episodes">
+    <div class="episodes-container">
+      <h2 class="episodes-section-title">Últimos Episodios</h2>
+      <div class="episodes-grid">
+        <div class="episode-card">
+          <div class="episode-meta">
+            <span class="episode-type">Episodio con Invitado</span>
+            <span class="episode-date">3 de noviembre, 2025</span>
+          </div>
+          <h3 class="episode-title">Adiccion Celular y la repiticion de patrones</h3>
+          <p class="episode-description">Romper el ciclo es posible, comprenderlo no nos condena al sufrimiento, sino que nos otorga el poder de elegir una vida mas consciente, plena y libre</p>
+          <div class="episode-tags">
+            <video controls autoplay muted loop>
+              <source src="videos/39.mp4" type="video/mp4">
+              Tu navegador no soporta el elemento de video.
+            </video>
+          </div>
+        </div>
+        <div class="episode-card">
+          <div class="episode-meta">
+            <span class="episode-type">Esenciales</span>
+            <span class="episode-date">30 de octubre, 2025</span>
+          </div>
+          <h3 class="episode-title">Adiccion Celular y la repiticion de patrones</h3>
+          <p class="episode-description">Reconocer y trabajar nuestra heridas del alma nos permite dejar de repetir patrones dolorosos y avanzar hacia una vida mas plena, autentica y en paz con nosotros mismos.</p>
+          <div class="episode-tags">
+            <video controls autoplay muted loop>
+              <source src="videos/43.mp4" type="video/mp4">
+              Tu navegador no soporta el elemento de video.
+            </video>
+          </div>
+        </div>
+        <div class="episode-card">
+          <div class="episode-meta">
+            <span class="episode-type">Episodio Solo</span>
+            <span class="episode-date">27 de octubre, 2025</span>
+          </div>
+          <h3 class="episode-title">La Amabilidad como estrategia de Superviviencia</h3>
+          <p class="episode-description">La amabilidad no es un lujo moral, sino una herramienta evolutiva y biologica que fortalece a los individuos a las comunidades. Promueve la cooperacion, protege al cerebro, reduce el riesgo de enfermedades y nos hace mas felices.</p>
+          <div class="episode-tags">
+            <video controls autoplay muted loop>
+              <source src="videos/42.mp4" type="video/mp4">
+              Tu navegador no soporta el elemento de video.
+            </video>
+          </div>
+        </div>
+      </div>
+      <h2 class="episodes-section-title featured-title">Episodios Destacados</h2>
+      <div class="episodes-grid">
+        <div class="episode-card">
+          <div class="episode-meta">
+            <span class="episode-type">Episodio con Invitado</span>
+            <span class="episode-date">6 de mayo, 2024</span>
+          </div>
+          <h3 class="episode-title">La importancia del Acompañamiento Tanatologico</h3>
+          <div class="episode-tags">
+            <video controls autoplay muted loop>
+              <source src="videos/38.mp4" type="video/mp4">
+              Tu navegador no soporta el elemento de video.
+            </video>
+          </div>
+        </div>
+        <div class="episode-card">
+          <div class="episode-meta">
+            <span class="episode-type">Episodio Solo</span>
+            <span class="episode-date">18 de abril, 2022</span>
+          </div>
+          <h3 class="episode-title">Inteligencia Emocional</h3>
+          <div class="episode-tags">
+            <video controls autoplay muted loop>
+              <source src="videos/37.mp4" type="video/mp4">
+              Tu navegador no soporta el elemento de video.
+            </video>
+          </div>
+        </div>
+        <div class="episode-card">
+          <div class="episode-meta">
+            <span class="episode-type">Episodio con Invitado</span>
+            <span class="episode-date">15 de agosto, 2022</span>
+          </div>
+          <h3 class="episode-title">Del Cinismo a la Esperanza</h3>
+          <div class="episode-tags">
+            <video controls autoplay muted loop>
+              <source src="videos/36.mp4" type="video/mp4">
+              Tu navegador no soporta el elemento de video.
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="topics">
+    <div class="topics-container">
+      <h2 class="topics-title">¿Buscas algo específico?</h2>
+      <p class="topics-subtitle">Busca en toda la biblioteca de contenido de Noel Ventura Lab.</p>
+      <div class="search-box">
+        <input type="text" placeholder="Buscar en este sitio" class="search-input">
+      </div>
+      <div class="topics-grid">
+        <div class="topic-card">Baños de Hielo y Enfriamiento Deliberado</div>
+        <div class="topic-card">Rutinas de Fitness y Entrenamiento</div>
+        <div class="topic-card">Exposición a la Luz y Ritmo Circadiano</div>
+        <div class="topic-card">Salud Mental</div>
+        <div class="topic-card">Higiene del Sueño</div>
+        <div class="topic-card">Suplementación</div>
+        <div class="topic-card">El Cerebro y la Neuroplasticidad</div>
+        <div class="topic-card">La Ciencia del TDAH</div>
+        <a href="episodios.html" class="topic-card">Explorar Todos los Temas</a>
+      </div>
+      <div class="topics-cta">
+        <a href="episodios.html" class="explore-link">Explorar Todos los Temas</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-bottom">
+        <div class="footer-logo"><a href="/">Noel Ventura Lab</a></div>
+        <p class="footer-copyright">© 2025 Noel Ventura<br>Noel Ventura Lab® es una marca registrada</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('menuToggle').addEventListener('click', function() {
+      document.getElementById('navMobile').classList.toggle('active');
+    });
+
+    document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const message = document.getElementById('formMessage');
+      message.className = 'form-message success';
+      message.textContent = '¡Gracias! Tu envío ha sido recibido.';
+      this.reset();
+    });
+
+    document.getElementById('newsletterForm2').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const message = document.getElementById('formMessage2');
+      message.className = 'form-message-small success';
+      message.textContent = '¡Gracias! Tu envío ha sido recibido.';
+      this.reset();
+    });
+
+    const carousels = [
+      { id: 'carousel1', prev: 'carouselPrev1', next: 'carouselNext1', currentIndex: 0, slides: 4 }
+    ];
+
+    carousels.forEach(carousel => {
+      const slidesContainer = document.getElementById(carousel.id);
+      const prevBtn = document.getElementById(carousel.prev);
+      const nextBtn = document.getElementById(carousel.next);
+      const dots = document.querySelectorAll(`#${carousel.id} ~ .carousel-nav .carousel-dot`);
+      
+      function updateCarousel() {
+        slidesContainer.style.transform = `translateX(-${carousel.currentIndex * 100}%)`;
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === carousel.currentIndex);
+        });
+      }
+
+      prevBtn.addEventListener('click', () => {
+        carousel.currentIndex = (carousel.currentIndex - 1 + carousel.slides) % carousel.slides;
+        updateCarousel();
+      });
+
+      nextBtn.addEventListener('click', () => {
+        carousel.currentIndex = (carousel.currentIndex + 1) % carousel.slides;
+        updateCarousel();
+      });
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          carousel.currentIndex = index;
+          updateCarousel();
+        });
+      });
+
+      setInterval(() => {
+        carousel.currentIndex = (carousel.currentIndex + 1) % carousel.slides;
+        updateCarousel();
+      }, 5000);
+    });
+  </script>
+</body>

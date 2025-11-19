@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suscribirse - Noel Ventura Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--primary-blue:#0066CC;--dark-blue:#0052A3;--light-blue:#E6F2FF;--text-dark:#000000;--text-gray:#333333;--text-light:#555555;--bg-white:#FFFFFF;--bg-light:#FAFAFA;--border-color:#E0E0E0;--success-color:#10B981;--error-color:#EF4444}
+    html,body{margin:0;width:100%;min-height:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background:url('images/fondodonacion.jpg') center center;background-size:180%;background-repeat:no-repeat;background-attachment:fixed}
+    a{text-decoration:none;color:inherit}
+    button{cursor:pointer;border:none;font-family:inherit}
+    .header{position:sticky;top:0;background:rgba(255,255,255,0.1);border-bottom:1px solid rgba(0,0,0,0.1);z-index:1000;box-shadow:0 1px 3px rgba(0,0,0,0.05);backdrop-filter:blur(15px)}
+    .header-container{max-width:1400px;margin:0 auto;padding:1rem 2rem;display:flex;align-items:center;justify-content:flex-start;gap:2rem}
+    .logo a{font-size:1.5rem;font-weight:700;color:#FFFFFF;letter-spacing:-0.02em}
+    .nav-desktop{display:flex;gap:2rem;align-items:center;margin-left:auto}
+    .nav-desktop a{font-size:0.95rem;font-weight:500;color:#FFFFFF;transition:color 0.2s}
+    .nav-desktop a:hover{color:rgba(255,255,255,0.8)}
+    .header-actions{display:flex;gap:1rem;align-items:center}
+    .btn-member{background:var(--primary-blue);color:white;padding:0.6rem 1.2rem;border-radius:6px;font-weight:600;font-size:0.9rem;transition:background 0.2s}
+    .btn-member:hover{background:var(--dark-blue)}
+    .btn-login{background:#000000;color:#FFFFFF;padding:0.6rem 1.2rem;font-weight:500;font-size:0.9rem;border-radius:6px;transition:background 0.2s}
+    .menu-toggle{display:none;background:transparent;font-size:1.5rem;padding:0.5rem;color:#FFFFFF}
+    .nav-mobile{display:none;flex-direction:column;padding:1rem 2rem;background:var(--bg-white);border-top:1px solid var(--border-color);gap:1rem}
+    .nav-mobile.active{display:flex}
+    .nav-mobile a{padding:0.75rem 0;font-weight:500;color:var(--text-dark);border-bottom:1px solid var(--border-color)}
+    .subscription-section{min-height:calc(100vh - 80px);display:flex;align-items:center;justify-content:flex-end;padding:4rem 2rem;background:url('images/fondodonacion.jpg');background-size:95%;background-position:center;background-repeat:no-repeat;position:relative}
+    .subscription-container{max-width:600px;width:100%;background:rgba(255,255,255,0.1);border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.1);padding:3rem;backdrop-filter:blur(10px);margin-right:2rem}
+    .subscription-title{font-size:2rem;font-weight:700;color:#FFFFFF;margin-bottom:0.5rem;text-align:center}
+    .subscription-subtitle{font-size:1rem;color:#FFFFFF;margin-bottom:2.5rem;text-align:center;line-height:1.6}
+    .subscription-form{display:flex;flex-direction:column;gap:1.5rem}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .form-group{display:flex;flex-direction:column;gap:0.5rem}
+    .form-label{font-size:0.95rem;font-weight:600;color:#FFFFFF}
+    .form-label .required{color:#FF6B6B;margin-left:2px}
+    .form-input{width:100%;padding:1rem 1.25rem;border:2px solid var(--border-color);border-radius:8px;font-size:1rem;font-family:inherit;transition:all 0.2s;background:var(--bg-white)}
+    .form-input:focus{outline:none;border-color:var(--primary-blue);box-shadow:0 0 0 3px rgba(0,102,204,0.1)}
+    .form-input:invalid:not(:placeholder-shown){border-color:var(--error-color)}
+    .form-input:valid:not(:placeholder-shown){border-color:var(--success-color)}
+    .form-error{color:var(--error-color);font-size:0.85rem;margin-top:-0.5rem;display:none}
+    .form-error.show{display:block}
+    .form-help{font-size:0.85rem;color:#FFFFFF;margin-top:-0.5rem;opacity:0.9}
+    .submit-container{margin-top:0.5rem}
+    .submit-btn{width:100%;background:var(--primary-blue);color:white;padding:1rem 2rem;border-radius:8px;font-weight:600;font-size:1rem;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.5rem}
+    .submit-btn:hover{background:var(--dark-blue);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,102,204,0.3)}
+    .submit-btn:active{transform:translateY(0)}
+    .submit-btn:disabled{background:var(--text-light);cursor:not-allowed;transform:none}
+    .form-message{text-align:center;padding:1rem;border-radius:8px;margin-top:1rem;display:none;font-weight:500}
+    .form-message.success{background:var(--light-blue);color:var(--dark-blue);border:2px solid var(--primary-blue);display:block}
+    .form-message.error{background:#FEE2E2;color:#991B1B;border:2px solid var(--error-color);display:block}
+    .checkbox-group{display:flex;align-items:flex-start;gap:0.75rem;cursor:pointer}
+    .form-checkbox{width:20px;height:20px;cursor:pointer;margin-top:2px;accent-color:var(--primary-blue)}
+    .checkbox-label{font-size:1rem;color:#FFFFFF;cursor:pointer;line-height:1.5;user-select:none}
+    .donation-section{margin-top:1rem;animation:fadeIn 0.3s ease-in}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+    .donation-box{background:var(--light-blue);border:2px solid var(--primary-blue);border-radius:12px;padding:2rem}
+    .donation-title{font-size:1.25rem;font-weight:600;color:var(--dark-blue);margin-bottom:1.5rem;text-align:center}
+    .donation-content{display:flex;flex-direction:column;align-items:center;gap:1.5rem}
+    .donation-image{max-width:100%;max-height:300px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);object-fit:contain}
+    .donation-info{width:100%;display:flex;flex-direction:column;align-items:center;gap:0.75rem}
+    .donation-label{font-size:1rem;font-weight:600;color:var(--text-dark);margin:0}
+    .account-number-container{display:flex;align-items:center;gap:0.75rem;background:var(--bg-white);padding:0.75rem 1.25rem;border-radius:8px;border:2px solid var(--border-color);width:100%;max-width:400px;justify-content:space-between}
+    .account-number{font-size:1.1rem;font-weight:600;color:var(--text-dark);letter-spacing:1px;margin:0;font-family:'Courier New',monospace}
+    .copy-btn{background:var(--primary-blue);color:white;border:none;padding:0.5rem;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;min-width:36px;height:36px}
+    .copy-btn:hover{background:var(--dark-blue);transform:scale(1.05)}
+    .copy-btn:active{transform:scale(0.95)}
+    .copy-message{color:var(--success-color);font-weight:600;font-size:0.9rem;animation:fadeIn 0.3s}
+    .footer{background:var(--bg-light);border-top:1px solid var(--border-color);padding:3rem 2rem 1.5rem;margin-top:4rem}
+    .footer-container{max-width:1400px;margin:0 auto}
+    .footer-content{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:3rem;margin-bottom:2rem}
+    .footer-heading{font-size:1rem;font-weight:600;color:var(--text-dark);margin-bottom:1rem}
+    .footer-links{list-style:none;display:flex;flex-direction:column;gap:0.75rem}
+    .footer-links a{color:var(--text-gray);font-size:0.9rem;transition:color 0.2s}
+    .footer-links a:hover{color:var(--primary-blue)}
+    .footer-bottom{text-align:center;padding-top:2rem;border-top:1px solid var(--border-color);color:var(--text-light);font-size:0.85rem}
+    .bottom-header{position:fixed;bottom:0;left:0;right:0;background:#000000;border-top:1px solid rgba(255,255,255,0.2);padding:1rem 2rem;z-index:999}
+    .bottom-header-container{max-width:1400px;margin:0 auto;text-align:center}
+    .bottom-header-text{color:#FFFFFF;font-size:0.85rem;margin:0}
+    @media (max-width:968px){.nav-desktop{display:none}.menu-toggle{display:block}.btn-login{display:none}}
+    @media (max-width:640px){.header-container{padding:1rem}.btn-member{display:none}.subscription-section{padding:2rem 1rem}.subscription-container{padding:2rem 1.5rem}.subscription-title{font-size:1.5rem}.form-row{grid-template-columns:1fr}.donation-box{padding:1.5rem}.donation-title{font-size:1.1rem}.account-number-container{flex-direction:column;gap:0.5rem}.account-number{font-size:0.95rem}}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-container">
+      <div class="logo"><a href="index.html">Noel Ventura Lab</a></div>
+      <nav class="nav-desktop">
+        <a href="episodios.html">Podcast</a>
+        <a href="acerca.html">Acerca de</a>
+      </nav>
+      <div class="header-actions">
+        <a href="index.html"><button class="btn-login">Regresar a Inicio</button></a>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+      </div>
+    </div>
+    <nav class="nav-mobile" id="navMobile">
+      <a href="episodios.html">Podcast</a>
+      <a href="acerca.html">Acerca de</a>
+    </nav>
+  </header>
+
+  <section class="subscription-section">
+    <div class="subscription-container">
+      <h1 class="subscription-title">Únete a Noel Ventura Lab</h1>
+      <p class="subscription-subtitle">Completa el formulario para suscribirte y acceder a contenido exclusivo sobre neurociencia, salud y bienestar.</p>
+      
+      <form class="subscription-form" id="subscriptionForm" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName" class="form-label">
+              Nombre <span class="required">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="firstName" 
+              name="firstName" 
+              class="form-input" 
+              placeholder="Ingresa tu nombre"
+              required
+              minlength="2"
+              pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
+              title="Solo se permiten letras y espacios"
+            >
+            <span class="form-error" id="firstNameError">Por favor ingresa un nombre válido</span>
+          </div>
+
+          <div class="form-group">
+            <label for="lastName" class="form-label">
+              Apellido <span class="required">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="lastName" 
+              name="lastName" 
+              class="form-input" 
+              placeholder="Ingresa tu apellido"
+              required
+              minlength="2"
+              pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
+              title="Solo se permiten letras y espacios"
+            >
+            <span class="form-error" id="lastNameError">Por favor ingresa un apellido válido</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone" class="form-label">
+            Número de Teléfono <span class="required">*</span>
+          </label>
+          <input 
+            type="tel" 
+            id="phone" 
+            name="phone" 
+            class="form-input" 
+            placeholder="Ejemplo: +52 55 1234 5678"
+            required
+            pattern="[\+]?[0-9\s\-\(\)]{10,}"
+            title="Ingresa un número de teléfono válido"
+          >
+          <span class="form-help">Incluye el código de país (ejemplo: +52 para México)</span>
+          <span class="form-error" id="phoneError">Por favor ingresa un número de teléfono válido</span>
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">
+            Correo Electrónico <span class="required">*</span>
+          </label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            class="form-input" 
+            placeholder="ejemplo@correo.com"
+            required
+            autocomplete="email"
+          >
+          <span class="form-help">Te enviaremos un correo de confirmación</span>
+          <span class="form-error" id="emailError">Por favor ingresa un correo electrónico válido</span>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input 
+              type="checkbox" 
+              id="donation" 
+              name="donation" 
+              class="form-checkbox"
+            >
+            <label for="donation" class="checkbox-label">
+              Deseo realizar una donación para apoyar el desarrollo de temas
+            </label>
+          </div>
+        </div>
+
+        <div class="donation-section" id="donationSection" style="display: none;">
+          <div class="donation-box">
+            <h3 class="donation-title">Información para Donadores</h3>
+            <div class="donation-content">
+              <div class="form-group" style="width: 100%; max-width: 400px;">
+                <label for="donationAmount" class="form-label" style="color: var(--dark-blue);">
+                  Monto de Donación <span class="required" style="color: var(--error-color);">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  id="donationAmount" 
+                  name="donationAmount" 
+                  class="form-input" 
+                  placeholder="Ejemplo: 100"
+                  min="1"
+                  step="0.01"
+                  style="background: var(--bg-white);"
+                >
+                <span class="form-help" style="color: var(--text-gray);">Ingresa el monto en pesos mexicanos</span>
+                <span class="form-error" id="donationAmountError" style="display: none;">Por favor ingresa un monto válido</span>
+              </div>
+              <img src="images/TARJETA1.jpg" alt="Información de tarjeta" class="donation-image">
+              <div class="donation-info">
+                <p class="donation-label">Número de Tarjeta:</p>
+                <div class="account-number-container">
+                  <p class="account-number" id="accountNumber">4152 3141 2030 6249</p>
+                  <button type="button" class="copy-btn" id="copyBtn" title="Copiar número de cuenta">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                  </button>
+                </div>
+                <span class="copy-message" id="copyMessage" style="display: none;">¡Copiado!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="submit-container">
+          <button type="submit" class="submit-btn" id="submitBtn">
+            <span>Suscribirse</span>
+          </button>
+        </div>
+
+        <div class="form-message" id="formMessage"></div>
+      </form>
+    </div>
+  </section>
+
+  <header class="bottom-header">
+    <div class="bottom-header-container">
+      <p class="bottom-header-text">© 2025 Noel Ventura - es una marca registrada</p>
+    </div>
+  </header>
+
+  <script>
+    const form = document.getElementById('subscriptionForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formMessage = document.getElementById('formMessage');
+    const inputs = form.querySelectorAll('.form-input');
+
+    // Validación en tiempo real
+    inputs.forEach(input => {
+      input.addEventListener('blur', () => validateField(input));
+      input.addEventListener('input', () => {
+        if (input.classList.contains('error')) {
+          validateField(input);
+        }
+      });
+    });
+
+    // Validación del campo de monto de donación
+    const donationAmountInput = document.getElementById('donationAmount');
+    if (donationAmountInput) {
+      donationAmountInput.addEventListener('blur', () => {
+        const donationChecked = document.getElementById('donation').checked;
+        if (donationChecked) {
+          const amount = donationAmountInput.value;
+          const errorElement = document.getElementById('donationAmountError');
+          if (!amount || parseFloat(amount) <= 0) {
+            donationAmountInput.classList.add('error');
+            errorElement.style.display = 'block';
+          } else {
+            donationAmountInput.classList.remove('error');
+            errorElement.style.display = 'none';
+          }
+        }
+      });
+    }
+
+    function validateField(field) {
+      const errorElement = document.getElementById(field.id + 'Error');
+      const isValid = field.checkValidity();
+
+      if (isValid) {
+        field.classList.remove('error');
+        errorElement.classList.remove('show');
+      } else {
+        field.classList.add('error');
+        errorElement.classList.add('show');
+      }
+
+      return isValid;
+    }
+
+    // Validación del formulario completo
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Validar todos los campos
+      let isValid = true;
+      inputs.forEach(input => {
+        if (!validateField(input)) {
+          isValid = false;
+        }
+      });
+
+      if (!isValid) {
+        formMessage.textContent = 'Por favor completa todos los campos correctamente.';
+        formMessage.className = 'form-message error';
+        return;
+      }
+
+      // Deshabilitar botón y mostrar carga
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Procesando...</span>';
+
+      // Simular envío (aquí iría la llamada a tu API)
+      try {
+        // Simular delay de red
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        // Obtener datos del formulario
+        const formData = new FormData(form);
+        const donationChecked = document.getElementById('donation').checked;
+        const donationAmount = document.getElementById('donationAmount').value;
+        
+        // Validar monto de donación si el checkbox está marcado
+        if (donationChecked && (!donationAmount || parseFloat(donationAmount) <= 0)) {
+          const donationError = document.getElementById('donationAmountError');
+          donationError.style.display = 'block';
+          document.getElementById('donationAmount').classList.add('error');
+          formMessage.textContent = 'Por favor ingresa un monto de donación válido.';
+          formMessage.className = 'form-message error';
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Suscribirse</span>';
+          return;
+        }
+        
+        const data = {
+          firstName: formData.get('firstName'),
+          lastName: formData.get('lastName'),
+          phone: formData.get('phone'),
+          email: formData.get('email'),
+          donation: donationChecked ? 'Sí' : 'No',
+          donationAmount: donationChecked ? (donationAmount || '0') : '0',
+          timestamp: new Date().toLocaleString('es-MX', { timeZone: 'America/Mexico_City' })
+        };
+
+        console.log('Datos del formulario:', data);
+
+        // Enviar datos a Google Sheets
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxIEBj3xKJAyEyKk3EuaBF2R3Zyu_xBq_rAvqfR8HjS_5l1dHW_2znVAAHc9i4pW0QZ5w/exec';
+        
+        // Enviar datos usando FormData para mejor compatibilidad
+        const formDataToSend = new FormData();
+        formDataToSend.append('timestamp', data.timestamp);
+        formDataToSend.append('firstName', data.firstName);
+        formDataToSend.append('lastName', data.lastName);
+        formDataToSend.append('phone', data.phone);
+        formDataToSend.append('email', data.email);
+        formDataToSend.append('donation', data.donation);
+        formDataToSend.append('donationAmount', data.donationAmount);
+        
+        // Enviar a Google Sheets
+        fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: formDataToSend
+        }).catch(error => {
+          console.log('Datos enviados (no-cors no permite ver respuesta):', error);
+        });
+
+        // Mostrar mensaje de éxito
+        formMessage.textContent = `¡Gracias ${data.firstName}! Tu suscripción ha sido exitosa. Te hemos enviado un correo de confirmación.`;
+        formMessage.className = 'form-message success';
+        form.reset();
+        
+        // Ocultar sección de donación si estaba visible
+        if (donationChecked) {
+          document.getElementById('donation').checked = false;
+          document.getElementById('donationSection').style.display = 'none';
+          document.getElementById('donationAmount').value = '';
+        }
+
+        // Redirigir después de 3 segundos
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 3000);
+
+      } catch (error) {
+        formMessage.textContent = 'Hubo un error al procesar tu suscripción. Por favor intenta nuevamente.';
+        formMessage.className = 'form-message error';
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>Suscribirse</span>';
+      }
+    });
+
+    // Menú móvil
+    document.getElementById('menuToggle').addEventListener('click', () => {
+      document.getElementById('navMobile').classList.toggle('active');
+    });
+
+    // Sección de donación
+    const donationCheckbox = document.getElementById('donation');
+    const donationSection = document.getElementById('donationSection');
+    const copyBtn = document.getElementById('copyBtn');
+    const accountNumber = document.getElementById('accountNumber');
+    const copyMessage = document.getElementById('copyMessage');
+
+    // Mostrar/ocultar sección de donación
+    donationCheckbox.addEventListener('change', () => {
+      if (donationCheckbox.checked) {
+        donationSection.style.display = 'block';
+      } else {
+        donationSection.style.display = 'none';
+        // Limpiar el campo de monto y errores
+        const donationAmountInput = document.getElementById('donationAmount');
+        if (donationAmountInput) {
+          donationAmountInput.value = '';
+          donationAmountInput.classList.remove('error');
+          document.getElementById('donationAmountError').style.display = 'none';
+        }
+      }
+    });
+
+    // Copiar número de cuenta al portapapeles
+    copyBtn.addEventListener('click', async () => {
+      const accountNumberText = accountNumber.textContent.trim();
+      
+      try {
+        await navigator.clipboard.writeText(accountNumberText);
+        
+        // Mostrar mensaje de confirmación
+        copyMessage.style.display = 'inline';
+        copyBtn.style.background = 'var(--success-color)';
+        
+        // Restaurar después de 2 segundos
+        setTimeout(() => {
+          copyMessage.style.display = 'none';
+          copyBtn.style.background = 'var(--primary-blue)';
+        }, 2000);
+      } catch (err) {
+        // Fallback para navegadores que no soportan clipboard API
+        const textArea = document.createElement('textarea');
+        textArea.value = accountNumberText;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.select();
+        
+        try {
+          document.execCommand('copy');
+          copyMessage.style.display = 'inline';
+          copyMessage.textContent = '¡Copiado!';
+          setTimeout(() => {
+            copyMessage.style.display = 'none';
+          }, 2000);
+        } catch (fallbackErr) {
+          copyMessage.textContent = 'Error al copiar';
+          copyMessage.style.display = 'inline';
+          copyMessage.style.color = 'var(--error-color)';
+        }
+        
+        document.body.removeChild(textArea);
+      }
+    });
+  </script>
+</body>
+</html>
+

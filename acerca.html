@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acerca de - Noel Ventura Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--primary-blue:#0066CC;--dark-blue:#0052A3;--light-blue:#E6F2FF;--text-dark:#000000;--text-gray:#333333;--text-light:#555555;--bg-white:#FFFFFF;--bg-light:#FAFAFA;--border-color:#E0E0E0}
+    html,body{margin:0;width:100%;height:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    body{background:url('images/fondo3.jpg') center center/cover no-repeat fixed}
+    a{text-decoration:none;color:inherit}
+    button{cursor:pointer;border:none;font-family:inherit}
+    img{max-width:100%;height:auto;display:block}
+    .header{position:sticky;top:0;background:rgba(255,255,255,0.1);backdrop-filter:blur(15px);border-bottom:1px solid var(--border-color);z-index:1000;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+    .header-container{max-width:1400px;margin:0 auto;padding:1rem 2rem;display:flex;align-items:center;justify-content:flex-start;gap:2rem}
+    .logo a{font-size:1.5rem;font-weight:700;color:var(--text-dark);letter-spacing:-0.02em}
+    .nav-desktop{display:flex;gap:2rem;align-items:center;margin-left:auto}
+    .nav-desktop a{font-size:0.95rem;font-weight:500;color:var(--text-dark);transition:color 0.2s}
+    .nav-desktop a:hover{color:var(--primary-blue)}
+    .header-actions{display:flex;gap:1rem;align-items:center}
+    .btn-member{background:var(--primary-blue);color:white;padding:0.6rem 1.2rem;border-radius:6px;font-weight:600;font-size:0.9rem;transition:background 0.2s}
+    .btn-member:hover{background:var(--dark-blue)}
+    .btn-login{background:#000000;color:#FFFFFF;padding:0.6rem 1.2rem;font-weight:500;font-size:0.9rem;border-radius:6px;transition:background 0.2s}
+    .menu-toggle{display:none;background:transparent;font-size:1.5rem;padding:0.5rem}
+    .nav-mobile{display:none;flex-direction:column;padding:1rem 2rem;background:var(--bg-white);border-top:1px solid var(--border-color);gap:1rem}
+    .nav-mobile.active{display:flex}
+    .nav-mobile a{padding:0.75rem 0;font-weight:500;color:var(--text-dark);border-bottom:1px solid var(--border-color)}
+    .about-container{max-width:900px;margin:0 auto;padding:4rem 2rem}
+    .about-title{font-size:3rem;font-weight:700;color:var(--text-dark);margin-bottom:1rem;line-height:1.2}
+    .about-subtitle{font-size:1.5rem;font-weight:600;color:var(--text-gray);margin-bottom:3rem}
+    .about-content{font-size:1.1rem;color:var(--text-gray);line-height:1.8;margin-bottom:2rem}
+    .about-content p{margin-bottom:1.5rem}
+    .about-content strong{color:var(--text-dark);font-weight:600}
+    .about-section{margin-bottom:3rem}
+    .about-section-title{font-size:1.8rem;font-weight:700;color:var(--text-dark);margin-bottom:1.5rem;margin-top:3rem}
+    .footer{text-align:center;padding:2rem;margin-top:4rem;border-top:1px solid var(--border-color)}
+    .footer-text{color:var(--text-gray);font-size:0.9rem}
+    @media (max-width:968px){.nav-desktop{display:none}.menu-toggle{display:block}.btn-login{display:none}.about-container{padding:3rem 1.5rem}.about-title{font-size:2.5rem}.about-subtitle{font-size:1.3rem}}
+    @media (max-width:640px){.header-container{padding:1rem}.btn-member{display:none}.about-title{font-size:2rem}.about-subtitle{font-size:1.1rem}.about-content{font-size:1rem}}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-container">
+      <div class="logo"><a href="index.html">Noel Ventura Lab</a></div>
+      <nav class="nav-desktop">
+        <a href="episodios.html">Podcast</a>
+        <a href="acerca.html">Acerca de</a>
+      </nav>
+      <div class="header-actions">
+        <a href="suscripcion.html"><button class="btn-member">Suscribirse</button></a>
+        <a href="index.html"><button class="btn-login">Página Principal</button></a>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+      </div>
+    </div>
+    <nav class="nav-mobile" id="navMobile">
+      <a href="episodios.html">Podcast</a>
+      <a href="acerca.html">Acerca de</a>
+    </nav>
+  </header>
+
+  <div class="about-container">
+    <h1 class="about-title">Conoce a Noel Ventura</h1>
+    
+    <div class="about-content">
+      <p>Noel Ventura es un profesional dedicado al desarrollo personal y el acompañamiento humano. Su trabajo se centra en la integración de conocimientos científicos rigurosos con un enfoque humanista y práctico para el crecimiento personal y el bienestar emocional.</p>
+
+      <p>Su formación y experiencia abarcan áreas como la inteligencia emocional y las herramientas prácticas para la transformación personal. A través de su labor, busca hacer accesible el conocimiento científico, conectándolo con las necesidades reales de las personas en su vida cotidiana.</p>
+
+      <div class="about-section">
+        <h2 class="about-section-title">Formación y Experiencia</h2>
+        <p>Noel Ventura ha dedicado a estudiar y aplicar los principios de la neurociencia y el desarrollo humano. Su enfoque combina la rigurosidad científica con la sensibilidad humana necesaria para acompañar procesos de transformación personal.</p>
+
+        <p>Su trabajo incluye investigación y aplicación práctica en áreas como la neuroplasticidad, la gestión emocional, el manejo del estrés y la ansiedad. Ha desarrollado protocolos y herramientas basadas en evidencia científica que son accesibles y aplicables en la vida diaria.</p>
+      </div>
+
+      <div class="about-section">
+        <h2 class="about-section-title">Enfoque y Metodología</h2>
+        <p>El enfoque de Noel Ventura se caracteriza por transmitir información científica, haciéndola cercana y práctica. Su metodología conecta cuerpo, emoción, conciencia y transformación, reflejando no solo conocimiento, sino sabiduría aplicada al desarrollo personal y al entendimiento profundo de lo que significa ser humano.</p>
+
+        <p>A través de su trabajo, explora temas fundamentales como el apego emocional, la resiliencia, la autoconciencia y la autorregulación, siempre con el objetivo de ayudar a las personas a dejar de culpar al exterior y asumir responsabilidad personal en su crecimiento.</p>
+      </div>
+
+      <div class="about-section">
+        <h2 class="about-section-title">Noel Ventura Lab</h2>
+        <p>En 2024, Noel Ventura lanzó el podcast Noel Ventura Lab, que se ha convertido en una plataforma importante para compartir conocimiento sobre neurociencia aplicada, desarrollo personal y herramientas prácticas para mejorar la calidad de vida.</p>
+
+        <p>A través del podcast Noel Ventura Lab, traduce la ciencia y las herramientas basadas en evidencia en protocolos accionables para mejorar la función cerebral, mejorar el estado de ánimo y la energía, optimizar la salud física y mental, y desarrollar nuevas habilidades y comportamientos.</p>
+
+        <p>El podcast aborda temas esenciales como la neuroplasticidad, la gestión emocional, el acompañamiento en procesos de duelo, la comunicación asertiva, el mindfulness y el bienestar mental, siempre con un enfoque práctico y humanizado.</p>
+      </div>
+
+      <div class="about-section">
+        <h2 class="about-section-title">Impacto y Visión</h2>
+        <p>El trabajo de Noel Ventura refleja un compromiso profundo con hacer que el conocimiento científico sea accesible y aplicable. Su enfoque humaniza la información técnica, la vuelve cercana y práctica, conectando cuerpo, emoción, conciencia y transformación.</p>
+
+        <p>A través de su combinación de investigación, experimentación innovadora y comunicación científica efectiva, Noel Ventura cierra la brecha entre los descubrimientos científicos y las aplicaciones del mundo real, haciendo que la neurociencia y el desarrollo personal sean accesibles y accionables para miles de personas.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-text">Noel Ventura Marca Registrada 2025</div>
+  </footer>
+
+  <script>
+    document.getElementById('menuToggle').addEventListener('click', function() {
+      document.getElementById('navMobile').classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
+
