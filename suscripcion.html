@@ -10,7 +10,7 @@
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     :root{--primary-blue:#0066CC;--dark-blue:#0052A3;--light-blue:#E6F2FF;--text-dark:#000000;--text-gray:#333333;--text-light:#555555;--bg-white:#FFFFFF;--bg-light:#FAFAFA;--border-color:#E0E0E0;--success-color:#10B981;--error-color:#EF4444}
-    html,body{margin:0;width:100%;min-height:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background:url('images/fondodonacion.jpg') center center;background-size:180%;background-repeat:no-repeat;background-attachment:fixed}
+    html,body{margin:0;width:100%;min-height:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background:url('/Podcast/images/fondodonacion.jpg') center center;background-size:180%;background-repeat:no-repeat;background-attachment:fixed}
     a{text-decoration:none;color:inherit}
     button{cursor:pointer;border:none;font-family:inherit}
     .header{position:sticky;top:0;background:rgba(255,255,255,0.1);border-bottom:1px solid rgba(0,0,0,0.1);z-index:1000;box-shadow:0 1px 3px rgba(0,0,0,0.05);backdrop-filter:blur(15px)}
@@ -27,7 +27,7 @@
     .nav-mobile{display:none;flex-direction:column;padding:1rem 2rem;background:var(--bg-white);border-top:1px solid var(--border-color);gap:1rem}
     .nav-mobile.active{display:flex}
     .nav-mobile a{padding:0.75rem 0;font-weight:500;color:var(--text-dark);border-bottom:1px solid var(--border-color)}
-    .subscription-section{min-height:calc(100vh - 80px);display:flex;align-items:center;justify-content:flex-end;padding:4rem 2rem;background:url('images/fondodonacion.jpg');background-size:95%;background-position:center;background-repeat:no-repeat;position:relative}
+    .subscription-section{min-height:calc(100vh - 80px);display:flex;align-items:center;justify-content:flex-end;padding:4rem 2rem;background:url('/Podcast/images/fondodonacion.jpg');background-size:95%;background-position:center;background-repeat:no-repeat;position:relative}
     .subscription-container{max-width:600px;width:100%;background:rgba(255,255,255,0.1);border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.1);padding:3rem;backdrop-filter:blur(10px);margin-right:2rem}
     .subscription-title{font-size:2rem;font-weight:700;color:#FFFFFF;margin-bottom:0.5rem;text-align:center}
     .subscription-subtitle{font-size:1rem;color:#FFFFFF;margin-bottom:2.5rem;text-align:center;line-height:1.6}
@@ -216,7 +216,7 @@
                 <span class="form-help" style="color: var(--text-gray);">Ingresa el monto en pesos mexicanos</span>
                 <span class="form-error" id="donationAmountError" style="display: none;">Por favor ingresa un monto válido</span>
               </div>
-              <img src="images/TARJETA1.jpg" alt="Información de tarjeta" class="donation-image">
+              <img src="/Podcast/images/TARJETA1.jpg" alt="Información de tarjeta" class="donation-image">
               <div class="donation-info">
                 <p class="donation-label">Número de Tarjeta:</p>
                 <div class="account-number-container">
