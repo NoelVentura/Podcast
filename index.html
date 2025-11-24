@@ -16,9 +16,10 @@
     img{max-width:100%;height:auto;display:block}
     .header{position:sticky;top:0;background:var(--bg-white);border-bottom:1px solid var(--border-color);z-index:1000;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
     .header-container{max-width:100%;margin:0;padding:1rem 1rem;display:flex;align-items:center;justify-content:flex-start;gap:2rem}
-    .logo a{font-size:1.5rem;font-weight:700;color:var(--text-dark);letter-spacing:-0.02em}
     .header-actions{display:flex;gap:1rem;align-items:center}
     .nav-desktop{display:flex;gap:2rem;align-items:center}
+    .logo{margin-left:auto}
+    .logo a{font-size:1.5rem;font-weight:700;color:var(--text-dark);letter-spacing:-0.02em}
     .nav-desktop a{font-size:0.95rem;font-weight:500;color:var(--text-dark);transition:color 0.2s}
     .nav-desktop a:hover{color:var(--primary-blue)}
     .btn-member{background:var(--primary-blue);color:white;padding:0.6rem 1.2rem;border-radius:6px;font-weight:600;font-size:0.9rem;transition:background 0.2s}
@@ -170,7 +171,6 @@
 <body>
   <header class="header">
     <div class="header-container">
-      <div class="logo"><a href="/">Noel Ventura Lab</a></div>
       <div class="header-actions">
         <a href="suscripcion.html"><button class="btn-member">Suscribirse</button></a>
         <a href="index.html"><button class="btn-login">Página Principal</button></a>
@@ -180,6 +180,7 @@
         <a href="episodios.html">Podcast</a>
         <a href="acerca.html">Acerca de</a>
       </nav>
+      <div class="logo"><a href="/">Noel Ventura Lab</a></div>
     </div>
     <nav class="nav-mobile" id="navMobile">
       <a href="episodios.html">Podcast</a>
