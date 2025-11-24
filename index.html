@@ -17,10 +17,10 @@
     .header{position:sticky;top:0;background:var(--bg-white);border-bottom:1px solid var(--border-color);z-index:1000;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
     .header-container{max-width:1400px;margin:0 auto;padding:1rem 2rem;display:flex;align-items:center;justify-content:flex-start;gap:2rem}
     .logo a{font-size:1.5rem;font-weight:700;color:var(--text-dark);letter-spacing:-0.02em}
+    .header-actions{display:flex;gap:1rem;align-items:center}
     .nav-desktop{display:flex;gap:2rem;align-items:center;margin-left:auto}
     .nav-desktop a{font-size:0.95rem;font-weight:500;color:var(--text-dark);transition:color 0.2s}
     .nav-desktop a:hover{color:var(--primary-blue)}
-    .header-actions{display:flex;gap:1rem;align-items:center}
     .btn-member{background:var(--primary-blue);color:white;padding:0.6rem 1.2rem;border-radius:6px;font-weight:600;font-size:0.9rem;transition:background 0.2s}
     .btn-member:hover{background:var(--dark-blue)}
     .btn-login{background:#000000;color:#FFFFFF;padding:0.6rem 1.2rem;font-weight:500;font-size:0.9rem;border-radius:6px;transition:background 0.2s}
@@ -171,15 +171,15 @@
   <header class="header">
     <div class="header-container">
       <div class="logo"><a href="/">Noel Ventura Lab</a></div>
-      <nav class="nav-desktop">
-        <a href="episodios.html">Podcast</a>
-        <a href="acerca.html">Acerca de</a>
-      </nav>
       <div class="header-actions">
         <a href="suscripcion.html"><button class="btn-member">Suscribirse</button></a>
         <a href="index.html"><button class="btn-login">Página Principal</button></a>
         <button class="menu-toggle" id="menuToggle">☰</button>
       </div>
+      <nav class="nav-desktop">
+        <a href="episodios.html">Podcast</a>
+        <a href="acerca.html">Acerca de</a>
+      </nav>
     </div>
     <nav class="nav-mobile" id="navMobile">
       <a href="episodios.html">Podcast</a>
@@ -208,7 +208,7 @@
         <h2 class="protocols-title">Podcast de la Semana</h2>
         <p class="protocols-subtitle">por Noel Ventura</p>
         <p class="protocols-description"><em>Epigenética y Transformación del Ser</em><br><br>Transformarse no significa convertirse en alguien nuevo, sino recordar quién se es realmente detrás de los miedos, los hábitos y las creencias heredadas.</p>
-        <button class="protocols-btn">Pre-ordenar Ahora</button>
+        <a href="episodios.html"><button class="protocols-btn">Explorar temas</button></a>
       </div>
       <div class="protocols-image">
         <video controls autoplay muted loop width="100%" style="max-width:400px;border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.1);">
@@ -441,21 +441,38 @@
       document.getElementById('navMobile').classList.toggle('active');
     });
 
+    // Formulario principal del hero
     document.getElementById('newsletterForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const message = document.getElementById('formMessage');
-      message.className = 'form-message success';
-      message.textContent = '¡Gracias! Tu envío ha sido recibido.';
-      this.reset();
+      const emailInput = document.getElementById('emailInput');
+      if (emailInput.value.trim() !== '') {
+        window.location.href = 'suscripcion.html';
+      }
     });
 
-    document.getElementById('newsletterForm2').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const message = document.getElementById('formMessage2');
-      message.className = 'form-message-small success';
-      message.textContent = '¡Gracias! Tu envío ha sido recibido.';
-      this.reset();
+    // Manejar formularios del carousel
+    const carouselForms = document.querySelectorAll('.carousel-form');
+    carouselForms.forEach(form => {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const emailInput = form.querySelector('.carousel-email-input');
+        if (emailInput && emailInput.value.trim() !== '') {
+          window.location.href = 'suscripcion.html';
+        }
+      });
     });
+
+    // Manejar newsletterForm2 si existe
+    const newsletterForm2 = document.getElementById('newsletterForm2');
+    if (newsletterForm2) {
+      newsletterForm2.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const emailInput = newsletterForm2.querySelector('input[type="email"]');
+        if (emailInput && emailInput.value.trim() !== '') {
+          window.location.href = 'suscripcion.html';
+        }
+      });
+    }
 
     const carousels = [
       { id: 'carousel1', prev: 'carouselPrev1', next: 'carouselNext1', currentIndex: 0, slides: 4 }
